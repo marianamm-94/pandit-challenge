@@ -3,9 +3,7 @@ import '../App.css';
 function MovieDetails (props) {
 const  movieDetails = props.movieDetails;
 return (
-
-    <>
-        <div className="modal fade show d-block" id="myModal" focus="true">
+        <div className="modal fade " id="myModal" role="dialog" >
             <div className="modal-dialog details-dialog">
                 <div className="modal-content details-content">
                     <div className="modal-header details-header" id="borderBottom">
@@ -34,14 +32,13 @@ return (
                         <div className="row movie-details-title"> Votes </div>
                         <div className="row movie-details-content"> {movieDetails.votes} </div>
                         <div className="row movie-details-title"> Revenue </div>
-                        <div className="row movie-details-content"> {movieDetails.revenue} </div>
+                        <div className="row movie-details-content"> {movieDetails.revenue !== null ? `$ ${movieDetails.revenue}M` : "-"} </div>
                         <div className="row movie-details-title"> Metascore </div>
                         <div className="row movie-details-content"> {movieDetails.metascore} </div>
                     </div>
                 </div>
             </div>
         </div>
-    </>
 );
 }
 export default MovieDetails;

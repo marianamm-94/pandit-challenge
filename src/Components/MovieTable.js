@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Axios from "axios";
 import { useState } from "react";
 import '../App.css';
@@ -7,7 +7,6 @@ import InfiniteScroll from "react-infinite-scroller";
 
 function MovieTable() {
   const [movies, setMovies] = useState([]);
-  const [modalShow, setModalShow] = useState(false);
   const [movieDetails, setMovieDetails] = useState({});
   const [top10Revenue, setTop10Revenue] = useState(false);
   const [top10RevenueYear, setTop10RevenueYear] = useState(false);
@@ -45,7 +44,6 @@ function MovieTable() {
     )
       .then((response) => {
         if (response.status === 200) {
-          setModalShow(true);
           setMovieDetails(response.data);
         }
       })
@@ -53,7 +51,8 @@ function MovieTable() {
         console.log(error);
       });
   };
-  
+
+
   const topRevenue = async (year) => {
     setMovies([]);
     year && setSelectedYear(year);
@@ -106,7 +105,6 @@ function MovieTable() {
         >
           Top 10 Revenue
         </button>
-      
         <button
           type="button"
           className={
@@ -133,7 +131,6 @@ function MovieTable() {
             </li>
           ))}
         </ul>
-    
         {top10Revenue || top10RevenueYear ? (
           <button className="icon-button" onClick={() => resetMovieList()}>
             <img src="/reload.svg" alt="reload icon" />
@@ -169,6 +166,8 @@ function MovieTable() {
                 <div className="col-1 movie-list-content">
                   <button
                     className="icon-button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModal"
                     onClick={() => showMovieDetails(movie.id)}
                   >
                     <img src="/eyeicon.svg" alt="eye icon" />
@@ -178,12 +177,9 @@ function MovieTable() {
             ))}
         </InfiniteScroll>  
       </div>
-      {modalShow && (
         <MovieDetails
           movieDetails={movieDetails}
-          onHide={() => setModalShow(false)}
         />
-      )}
     </>
   );
 }
